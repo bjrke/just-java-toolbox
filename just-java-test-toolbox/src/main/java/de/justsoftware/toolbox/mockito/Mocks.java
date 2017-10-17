@@ -8,24 +8,22 @@
  * modification are strictly prohibited without prior written consent of
  * Just Software AG.
  */
-package de.justsoftware.mockito;
+package de.justsoftware.toolbox.mockito;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
-
+import com.google.common.collect.FluentIterable;
 import org.mockito.InOrder;
 import org.mockito.Mockito;
 import org.mockito.internal.util.MockUtil;
 
-import com.google.common.collect.FluentIterable;
+import javax.annotation.Nonnull;
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * utility class for usage with mocks
- * 
+ *
  * @author Jan Burkhardt (jan.burkhardt@just.social) (initial creation)
  */
 @ParametersAreNonnullByDefault
@@ -62,7 +60,6 @@ public final class Mocks<S> {
     public <T> T getMock(final Class<T> mockClass) {
         for (final Object m : _mocks) {
             if (mockClass.isInstance(m)) {
-                @SuppressWarnings("unchecked")
                 final T t = (T) m;
                 return t;
             }
@@ -82,11 +79,9 @@ public final class Mocks<S> {
 
     /**
      * searches for a constructor which accepts mocks and creates an instance of the provided class
-     * 
-     * @param clz
-     *            the class of the service implementation
-     * @param params
-     *            are searched for candidates and passed to the constructor if the type of an argument matches
+     *
+     * @param clz    the class of the service implementation
+     * @param params are searched for candidates and passed to the constructor if the type of an argument matches
      * @return the created object
      */
     @Nonnull
@@ -96,11 +91,9 @@ public final class Mocks<S> {
 
     /**
      * searches for a constructor which accepts mocks and creates an instance of the provided class
-     * 
-     * @param clz
-     *            the class of the service implementation
-     * @param params
-     *            are searched for candidates and passed to the constructor if the type of an argument matches
+     *
+     * @param clz    the class of the service implementation
+     * @param params are searched for candidates and passed to the constructor if the type of an argument matches
      * @return a wrapper around the created object with some helper functions
      */
     @Nonnull
@@ -121,7 +114,7 @@ public final class Mocks<S> {
 
         //try default constructor
         try {
-            return new Mocks<S>(clz.newInstance(), new Object[0]);
+            return new Mocks<>(clz.newInstance(), new Object[0]);
         } catch (InstantiationException | IllegalAccessException e) {
             throw new IllegalArgumentException(e);
         }
@@ -141,9 +134,8 @@ public final class Mocks<S> {
                     .filter(new MockUtil()::isMock)
                     .toArray(Object.class);
 
-            @SuppressWarnings("unchecked")
             final S result = (S) c.newInstance(initParams);
-            return new Mocks<S>(result, mocks);
+            return new Mocks<>(result, mocks);
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
             throw new IllegalArgumentException(e);
         }

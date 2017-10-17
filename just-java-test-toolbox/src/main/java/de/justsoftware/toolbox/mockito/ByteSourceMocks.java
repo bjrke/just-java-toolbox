@@ -8,19 +8,17 @@
  * modification are strictly prohibited without prior written consent of
  * Just Software AG.
  */
-package de.justsoftware.mockito;
-
-import java.io.IOException;
-
-import javax.annotation.Nonnull;
-
-import org.mockito.Mockito;
+package de.justsoftware.toolbox.mockito;
 
 import com.google.common.io.ByteSource;
+import org.mockito.Mockito;
+
+import javax.annotation.Nonnull;
+import java.io.IOException;
 
 /**
  * Helper class for mocking ByteSources
- * 
+ *
  * @author Christian Ewers <christian.ewers@just.social> (initial creation)
  */
 public final class ByteSourceMocks {
