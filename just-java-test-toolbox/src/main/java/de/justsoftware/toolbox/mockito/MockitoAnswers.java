@@ -8,18 +8,7 @@
  * modification are strictly prohibited without prior written consent of
  * Just Software AG.
  */
-package de.justsoftware.mockito;
-
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.function.BiFunction;
-
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
-
-import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
+package de.justsoftware.toolbox.mockito;
 
 import com.google.common.base.Function;
 import com.google.common.base.Functions;
@@ -34,36 +23,42 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Multimaps;
 import com.google.common.collect.Table;
+import org.mockito.Mockito;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
+
+import javax.annotation.Nonnull;
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.function.BiFunction;
 
 /**
  * This is a class with useful Mockito answers.
- * 
+ *
  * @author Jan Burkhardt (jan.burkhardt@just.social) (initial creation)
  */
 @ParametersAreNonnullByDefault
 public enum MockitoAnswers implements Answer<Object> {
 
-        /**
-         * mock a builder which returns itself on every method call where it is possible
-         */
-        THIS {
-            @Override
-            public Object answer(final InvocationOnMock invocation) throws Throwable {
-                final Class<?> clz = invocation.getMethod().getReturnType();
-                final Object mock = invocation.getMock();
-                if (clz.isInstance(mock)) {
-                    return mock;
-                } else {
-                    return Mockito.RETURNS_DEFAULTS.answer(invocation);
-                }
+    /**
+     * mock a builder which returns itself on every method call where it is possible
+     */
+    THIS {
+        @Override
+        public Object answer(final InvocationOnMock invocation) throws Throwable {
+            final Class<?> clz = invocation.getMethod().getReturnType();
+            final Object mock = invocation.getMock();
+            if (clz.isInstance(mock)) {
+                return mock;
+            } else {
+                return Mockito.RETURNS_DEFAULTS.answer(invocation);
             }
-        },
-
-    ;
+        }
+    },;
 
     @Nonnull
     private static <K> ImmutableSet<K> argumentAsSet(final InvocationOnMock invocation) {
-        @SuppressWarnings("unchecked")
         final Iterable<K> keys = invocation.getArgumentAt(0, Iterable.class);
         // keys is null when Mockito.any() is passed as argument
         if (keys == null) {
@@ -74,7 +69,6 @@ public enum MockitoAnswers implements Answer<Object> {
 
     @Nonnull
     private static <K, V> ImmutableSetMultimap<K, V> argAsMultimap(final InvocationOnMock invocation) {
-        @SuppressWarnings("unchecked")
         final Multimap<K, V> keys = invocation.getArgumentAt(0, Multimap.class);
         // keys is null when Mockito.any() is passed as argument
         if (keys == null) {
@@ -85,7 +79,7 @@ public enum MockitoAnswers implements Answer<Object> {
 
     /**
      * Create an answer to mock bulk getters. Use this to mock methods like:
-     * 
+     * <p>
      * Map<K, V> getByFoos(Iterable<K> foos);
      */
     @Nonnull
@@ -102,7 +96,7 @@ public enum MockitoAnswers implements Answer<Object> {
 
     /**
      * Create an answer to mock bulk getters. Use this to mock methods like:
-     * 
+     * <p>
      * Map<K, V> getByFoos(Iterable<K> foos);
      */
     @Nonnull
@@ -112,7 +106,7 @@ public enum MockitoAnswers implements Answer<Object> {
 
     /**
      * Create an answer to mock bulk getters. Use this to mock methods like:
-     * 
+     * <p>
      * ImmutableSetMultimap<K, V> getByFoos(Iterable<K> foos);
      */
     @Nonnull
@@ -129,7 +123,7 @@ public enum MockitoAnswers implements Answer<Object> {
 
     /**
      * Create an answer to mock bulk getters. Use this to mock methods like:
-     * 
+     * <p>
      * ImmutableSetMultmap<K, V> getByFoos(Iterable<K> foos);
      */
     @Nonnull
@@ -140,7 +134,7 @@ public enum MockitoAnswers implements Answer<Object> {
 
     /**
      * Create an answer to mock bulk getters. Use this to mock methods like:
-     * 
+     * <p>
      * ImmutableListMultimap<K, V> getByFoos(Iterable<K> foos);
      */
     @Nonnull
@@ -157,7 +151,7 @@ public enum MockitoAnswers implements Answer<Object> {
 
     /**
      * Create an answer to mock bulk getters. Use this to mock methods like:
-     * 
+     * <p>
      * ImmutableListMultimap<K, V> getByFoos(Iterable<K> foos);
      */
     @Nonnull
@@ -168,7 +162,7 @@ public enum MockitoAnswers implements Answer<Object> {
 
     /**
      * Create an answer to mock bulk getters. Use this to mock methods like:
-     * 
+     * <p>
      * ImmutableSetMultmap<K, V> getByFoos(SetMultimap<K, V> foos);
      */
     @Nonnull
@@ -186,7 +180,7 @@ public enum MockitoAnswers implements Answer<Object> {
 
     /**
      * Create an answer to mock bulk getters. Use this to mock methods like:
-     * 
+     * <p>
      * Table<R, C, V> getByFoos(SetMultimap<R,C> foos);
      */
     @Nonnull
@@ -209,7 +203,7 @@ public enum MockitoAnswers implements Answer<Object> {
 
     /**
      * Create an answer to mock bulk getters. Use this to mock methods like:
-     * 
+     * <p>
      * Table<R, C, V> getByFoos(SetMultimap<R,C> foos);
      */
     @Nonnull
@@ -220,15 +214,15 @@ public enum MockitoAnswers implements Answer<Object> {
 
     /**
      * Create an answer to mock bulk getters. Use this to mock methods like:
-     * 
+     * <p>
      * Table<R, C, V> getByFoos(SetMultimap<R,C> foos);
      */
     @Nonnull
     public static <C, R, V> Answer<ImmutableTable<? super C, ? super R, ? extends V>> bulkTableAnswer(
             final Table<? super C, ? super R, ? extends V> table) {
         return bulkTableAnswer(input -> input != null
-            ? table.get(input.getKey(), input.getValue())
-            : null);
+                ? table.get(input.getKey(), input.getValue())
+                : null);
     }
 
 }

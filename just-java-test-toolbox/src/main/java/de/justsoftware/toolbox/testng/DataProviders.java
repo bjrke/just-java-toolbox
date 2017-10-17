@@ -8,24 +8,23 @@
  * modification are strictly prohibited without prior written consent of
  * Just Software AG.
  */
-package de.justsoftware.testng;
+package de.justsoftware.toolbox.testng;
 
+import com.google.common.collect.FluentIterable;
+import com.google.common.collect.Iterators;
+import com.google.common.collect.Sets;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.google.common.collect.FluentIterable;
-import com.google.common.collect.Iterators;
-import com.google.common.collect.Sets;
-
 /**
  * Utility for {@link org.testng.annotations.DataProvider}s.
- * 
+ *
  * @author Jan Burkhardt (initial creation)
  */
 public final class DataProviders {
@@ -67,7 +66,7 @@ public final class DataProviders {
 
             @Override
             protected Object[] next(final Object next) {
-                return new Object[] { next };
+                return new Object[]{next};
             }
 
         };
@@ -95,9 +94,9 @@ public final class DataProviders {
             @Override
             protected Object[] next(final T next) {
                 if (next == null) {
-                    return new Object[] { null, null };
+                    return new Object[]{null, null};
                 }
-                return new Object[] { next.getKey(), next.getValue() };
+                return new Object[]{next.getKey(), next.getValue()};
             }
 
         };

@@ -8,19 +8,18 @@
  * modification are strictly prohibited without prior written consent of
  * Just Software AG.
  */
-package de.justsoftware.uuid;
-
-import java.util.Random;
-import java.util.UUID;
-
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+package de.justsoftware.toolbox.uuid;
 
 import com.google.common.primitives.UnsignedLong;
 
+import javax.annotation.Nonnull;
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Random;
+import java.util.UUID;
+
 /**
  * utility to create {@link UUID}s which are more "readable" than fully random generated {@link UUID}s
- * 
+ *
  * @author Jan Burkhardt (jan.burkhardt@just.social) (initial creation)
  */
 @ParametersAreNonnullByDefault

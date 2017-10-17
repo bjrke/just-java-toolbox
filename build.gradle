@@ -1,3 +1,15 @@
+buildscript {
+    repositories {
+        maven {
+            credentials {
+                username repositoryUser
+                password repositoryPassword
+            }
+            url jucoRepositoryCentral
+        }
+    }
+}
+
 plugins {
     id 'fr.brouillard.oss.gradle.jgitver' version '0.3.1'
 }
@@ -9,9 +21,12 @@ subprojects {
 
     apply plugin: 'java'
     apply plugin: 'eclipse'
+    apply plugin: 'maven'
 
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
+
+    group 'de.justsoftware.toolbox'
 
     dependencies {
         testCompile 'org.mockito:mockito-core:1.10.19'
@@ -35,5 +50,18 @@ subprojects {
 
     jgitver {
         mavenLike true
+    }
+
+    uploadArchives {
+        repositories {
+            repositories.mavenDeployer {
+                repository(url: jucoRepositoryReleases) {
+                    authentication(userName: repositoryUser, password: repositoryPassword)
+                }
+                snapshotRepository(url: jucoRepositorySnapshots) {
+                    authentication(userName: repositoryUser, password: repositoryPassword)
+                }
+            }
+        }
     }
 }

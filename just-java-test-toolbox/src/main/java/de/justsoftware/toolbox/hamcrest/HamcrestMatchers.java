@@ -8,22 +8,7 @@
  * modification are strictly prohibited without prior written consent of
  * Just Software AG.
  */
-package de.justsoftware.hamcrest;
-
-import java.util.Collection;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-import java.util.function.BiPredicate;
-
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
-
-import org.hamcrest.BaseMatcher;
-import org.hamcrest.Description;
-import org.hamcrest.Matcher;
-import org.hamcrest.Matchers;
-import org.hamcrest.TypeSafeDiagnosingMatcher;
+package de.justsoftware.toolbox.hamcrest;
 
 import com.google.common.base.Function;
 import com.google.common.collect.FluentIterable;
@@ -31,10 +16,23 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
+import org.hamcrest.BaseMatcher;
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
+import org.hamcrest.Matchers;
+import org.hamcrest.TypeSafeDiagnosingMatcher;
+
+import javax.annotation.Nonnull;
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Collection;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.function.BiPredicate;
 
 /**
  * This is a class with useful Hamcest matchers.
- * 
+ *
  * @author wolfgang (initial creation)
  */
 //CSOFF:MultipleStringLiterals
@@ -43,7 +41,7 @@ public class HamcrestMatchers {
 
     @Nonnull
     public static <T> Matcher<Iterable<T>> sameIterable(final Function<T, Matcher<? super T>> matcherFunction,
-            final Iterable<? extends T> expected) {
+                                                        final Iterable<? extends T> expected) {
         return new TypeSafeDiagnosingMatcher<Iterable<T>>() {
             private final ImmutableList<Matcher<? super T>> _matchers =
                     FluentIterable.from(expected).transform(matcherFunction).toList();
@@ -82,7 +80,7 @@ public class HamcrestMatchers {
 
     @Nonnull
     public static <K, V> Matcher<Map<K, V>> sameMap(final Function<V, Matcher<? super V>> valueMatcherFunction,
-            final Map<K, V> expected) {
+                                                    final Map<K, V> expected) {
         return new TypeSafeDiagnosingMatcher<Map<K, V>>() {
 
             private final ImmutableMap<K, Matcher<? super V>> _matchers =
@@ -121,7 +119,7 @@ public class HamcrestMatchers {
      */
     @Nonnull
     public static <K, V> Matcher<Multimap<K, V>> sameMultimap(final Function<V, Matcher<? super V>> valueMatcherFunction,
-            final Multimap<K, V> expected) {
+                                                              final Multimap<K, V> expected) {
         return new TypeSafeDiagnosingMatcher<Multimap<K, V>>() {
 
             @Override
